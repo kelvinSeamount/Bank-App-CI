@@ -17,7 +17,7 @@ pipeline {
         
         stage('Git Checkout') {
             steps {
-               git branch: 'main', url: 'https://github.com/kelvinSeamount/Bank-App-CI.git'
+               git branch: 'main', credentialsId: 'git-token', url: 'https://github.com/kelvinSeamount/Bank-App-CI.git'
             }
         }
         
@@ -55,15 +55,14 @@ pipeline {
             }
         }
         
-          // Quality Gate Check - Skipped for now due to timeout issues
-          // You can view the quality gate results directly in SonarQube dashboard
-          // stage('Quality Gate Check') {
-          //   steps {
-          //       timeout(time: 5, unit: 'MINUTES') {
-          //            waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
-          //       }
-          //   }
-          // }
+
+           stage('Quality Gate Check') {
+                        steps {
+                 timeout(time: 5, unit: 'MINUTES') {
+                   waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
+                 }
+            }
+            }
         
           stage('Build') {
             steps {
@@ -77,7 +76,7 @@ pipeline {
             steps {
                 dir('Bank-CI-main') {
                     withMaven(globalMavenSettingsConfig: 'mekadevops', maven: 'maven3', traceability: true) {
-                        sh "mvn deploy -DskipTests"
+                        sh "mvn deploy"
                     }
                 }
             }
@@ -110,15 +109,70 @@ pipeline {
                 }
             }
         }
-        
-        stage('Complete') {
+    
+    stage('Update Manifest File in Mega-Project-CD') {
             steps {
-                echo "======================================"
-                echo "Pipeline completed successfully!"
-                echo "Docker Image: castromeka/gcbank:${IMAGE_TAG}"
-                echo "SonarQube Dashboard: http://3.127.39.213:9000/dashboard?id=gcbank"
-                echo "======================================"
+                script {
+                    // Clean workspace before starting
+                    cleanWs()
+
+                    withCredentials([usernamePassword(credentialsId: 'git-token', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                        sh '''
+                            # Clone the Mega-Project-CD repository
+                            git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/kelvinSeamount/Bank-App-CD.git
+                            
+                            # Update the image tag in the manifest.yaml file
+                            cd Bank-App-CD
+                            sed -i "s|castromeka/gcbank:.*|castromeka/gcbank:${IMAGE_TAG}|" Manifest/manifest.yaml
+                            # Confirm changes
+                            echo "Updated manifest file contents:"
+                            cat Manifest/manifest.yaml
+                            
+                            # Commit and push the changes
+                            git config user.name "Jenkins"
+                            git config user.email "jenkins@example.com"
+                            git add Manifest/manifest.yaml
+                            git commit -m "Update image tag to ${IMAGE_TAG}"
+                            git push origin main
+                        '''
+                    }
+                }
             }
+        }    
+    }
+    
+    post {
+    always {
+        script {
+            def jobName = env.JOB_NAME
+            def buildNumber = env.BUILD_NUMBER
+            def pipelineStatus = currentBuild.result ?: 'UNKNOWN'
+            def bannerColor = pipelineStatus.toUpperCase() == 'SUCCESS' ? 'green' : 'red'
+
+            def body = """
+                <html>
+                <body>
+                <div style="border: 4px solid ${bannerColor}; padding: 10px;">
+                <h2>${jobName} - Build ${buildNumber}</h2>
+                <div style="background-color: ${bannerColor}; padding: 10px;">
+                <h3 style="color: white;">Pipeline Status: ${pipelineStatus.toUpperCase()}</h3>
+                </div>
+                <p>Check the <a href="${BUILD_URL}">console output</a>.</p>
+                </div>
+                </body>
+                </html>
+            """
+
+            emailext (
+                subject: "${jobName} - Build ${buildNumber} - ${pipelineStatus.toUpperCase()}",
+                body: body,
+                to: 'nwachukwukelvin89@gmail.com',
+                from: 'jenkins@mekadevops.com',
+                replyTo: 'jenkins@mekadevops.com',
+                mimeType: 'text/html',
+               
+            )
         }
     }
+}
 }
