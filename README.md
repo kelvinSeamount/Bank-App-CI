@@ -13,50 +13,50 @@ Architecture Components
 
 Jenkins Master
 
- Central CI/CD orchestration server
+    Central CI/CD orchestration server
 
- Integration with SCM (GitHub)
+    Integration with SCM (GitHub)
 
- Webhook-based automated builds
+    Webhook-based automated builds
 
 
 Build Tools
 
- Maven: Dependency management and build automation
+    Maven: Dependency management and build automation
 
- Gradle: Alternative build system support
+    Gradle: Alternative build system support
 
 
 Code Quality & Security
 
- SonarQube: Static code analysis and quality gates
+    SonarQube: Static code analysis and quality gates
 
- Code coverage analysis
+    Code coverage analysis
 
- Security vulnerability scanning
+    Security vulnerability scanning
 
- Technical debt tracking
+    Technical debt tracking
 
 
 Artifact Repository
 
-Nexus Repository: Artifact storage and management
+    Nexus Repository: Artifact storage and management
 
-Docker image registry
+    Docker image registry
 
-Maven/Gradle artifact hosting
+    Maven/Gradle artifact hosting
 
-Dependency proxy and caching
+    Dependency proxy and caching
 
 
 
 Infrastructure Server
 
-Central configuration management
+    Central configuration management
 
-Build agent coordination
+    Build agent coordination
 
-Resource management
+    Resource management
 
 
 Prerequisites
