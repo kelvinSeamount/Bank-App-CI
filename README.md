@@ -13,34 +13,34 @@ Architecture Components
 
 Jenkins Master
 
-Central CI/CD orchestration server
-Integration with SCM (GitHub)
-Webhook-based automated builds
+# Central CI/CD orchestration server
+# Integration with SCM (GitHub)
+# Webhook-based automated builds
 
 Build Tools
 
-Maven: Dependency management and build automation
-Gradle: Alternative build system support
+# Maven: Dependency management and build automation
+# Gradle: Alternative build system support
 
 Code Quality & Security
 
-SonarQube: Static code analysis and quality gates
-Code coverage analysis
-Security vulnerability scanning
-Technical debt tracking
+# SonarQube: Static code analysis and quality gates
+# Code coverage analysis
+# Security vulnerability scanning
+# Technical debt tracking
 
 Artifact Repository
 
-Nexus Repository: Artifact storage and management
-Docker image registry
-Maven/Gradle artifact hosting
-Dependency proxy and caching
+# Nexus Repository: Artifact storage and management
+# Docker image registry
+# Maven/Gradle artifact hosting
+# Dependency proxy and caching
 
 Infrastructure Server
 
-Central configuration management
-Build agent coordination
-Resource management
+# Central configuration management
+# Build agent coordination
+# Resource management
 
 Prerequisites
 
@@ -55,16 +55,16 @@ Jenkins server (v2.400+) with required plugins:
     Kubernetes Plugin (for CD trigger)
     GitHub Integration Plugin
 
-Java 11 or higher installed on Jenkins
-Maven 3.8+ configured in Jenkins Global Tool Configuration
-Docker installed on Jenkins agent/server
-Trivy security scanner installed on Jenkins agent
-Access to SonarQube instance (http://3.127.39.213:9000)
-Nexus Repository Manager with configured Maven settings
-GitHub account with repository access
-Docker Hub account for image registry
-Gmail account configured for email notifications
-Network access to all integrated services
+# Java 11 or higher installed on Jenkins
+# Maven 3.8+ configured in Jenkins Global Tool Configuration
+# Docker installed on Jenkins agent/server
+# Trivy security scanner installed on Jenkins agent
+# Access to SonarQube instance (http://3.127.39.213:9000)
+# Nexus Repository Manager with configured Maven settings
+# GitHub account with repository access
+# Docker Hub account for image registry
+# Gmail account configured for email notifications
+# Network access to all integrated services
 
 
 NB: commands for Setting up Infra Server & Jenkins can be found in the Terraform Repository.
