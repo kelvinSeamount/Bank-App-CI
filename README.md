@@ -46,15 +46,17 @@ Docker image registry
 
 Maven/Gradle artifact hosting
 
- Dependency proxy and caching
+Dependency proxy and caching
+
+
 
 Infrastructure Server
 
-Central configuration management
+.Central configuration management
 
-Build agent coordination
+.Build agent coordination
 
-Resource management
+.Resource management
 
 
 Prerequisites
