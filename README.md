@@ -13,9 +13,11 @@ Architecture Components
 
 Jenkins Master
 
-# Central CI/CD orchestration server
-# Integration with SCM (GitHub)
-# Webhook-based automated builds
+ Central CI/CD orchestration server
+
+ Integration with SCM (GitHub)
+
+ Webhook-based automated builds
 
 Build Tools
 
