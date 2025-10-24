@@ -1,3 +1,5 @@
+Corporate Bank App Mega Devops Project
+![alt text](Flow.png)
 Overview
 
 This repository contains the Continuous Integration (CI) pipeline configuration and source code for the Bank Application (BankApp) a Java based banking application developed using Spring Boot. The CI pipeline is built using Jenkins and integrates with multiple tools to ensure code quality, security scanning, and artifact management.
