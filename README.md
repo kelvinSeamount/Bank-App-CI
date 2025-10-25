@@ -97,3 +97,4 @@ Network access to all integrated services
 
 
 NB: commands for Setting up Infra Server & Jenkins can be found in the Terraform Repository.
+NB: Repository for CD https://github.com/kelvinSeamount/Bank-App-CD
